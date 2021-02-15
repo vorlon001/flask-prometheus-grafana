@@ -8,11 +8,11 @@ CONSOLE-LOG-KUBERNETES.txt - логи кубенетес
 
 DOCKER.tar.gz - конфигурация докера
 
-FLASK-DOCKER-SCREEN.docx - скриншоты прометеус, графана, докера
+FLASK-DOCKER-SCREEN  - скриншоты прометеус, графана, докера
 
 flask FLASK WEB RPS-data-2021-02-14 13_48_33.csv - выгрузка из графаны докер
 
-FLASK-KUBERNETES-SCREEN.docx - скриншоты прометеус, графана, кубернетес
+FLASK-KUBERNETES-SCREEN - скриншоты прометеус, графана, кубернетес
 
 flask-python-service FLASK WEB RPS-data-2021-02-14 13_49_04.csv - выгрузка из графаны кубернетес
 
