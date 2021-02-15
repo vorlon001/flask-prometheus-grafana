@@ -1,0 +1,186 @@
+<REMOVE>$ wrk -t12 -c400 -d600s http://127.0.0.1:5000/
+Running 10m test @ http://127.0.0.1:5000/
+  12 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   341.61ms  383.69ms   2.00s    84.17%
+    Req/Sec    70.74     26.89   330.00     65.47%
+  507525 requests in 10.00m, 84.60MB read
+  Socket errors: connect 0, read 2798, write 0, timeout 15816
+Requests/sec:    845.75
+Transfer/sec:    144.35KB
+<REMOVE>$
+
+<REMOVE>$ ab -c 10 -n 10000 http://127.0.0.1:5000/
+This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Werkzeug/1.0.1
+Server Hostname:        127.0.0.1
+Server Port:            5000
+
+Document Path:          /
+Document Length:        21 bytes
+
+Concurrency Level:      10
+Time taken for tests:   10.635 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      1750000 bytes
+HTML transferred:       210000 bytes
+Requests per second:    940.33 [#/sec] (mean)
+Time per request:       10.635 [ms] (mean)
+Time per request:       1.063 [ms] (mean, across all concurrent requests)
+Transfer rate:          160.70 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:     1   11   2.3     10      35
+Waiting:        1    9   2.0      9      28
+Total:          2   11   2.3     10      35
+
+Percentage of the requests served within a certain time (ms)
+  50%     10
+  66%     11
+  75%     11
+  80%     12
+  90%     13
+  95%     14
+  98%     19
+  99%     21
+ 100%     35 (longest request)
+Для вас есть почта в /var/mail/vorlon
+<REMOVE>$ ab -c 400 -n 10000 http://127.0.0.1:5000/
+This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Werkzeug/1.0.1
+Server Hostname:        127.0.0.1
+Server Port:            5000
+
+Document Path:          /
+Document Length:        21 bytes
+
+Concurrency Level:      400
+Time taken for tests:   16.515 seconds
+Complete requests:      10000
+Failed requests:        51
+   (Connect: 0, Receive: 0, Length: 51, Exceptions: 0)
+Total transferred:      1741075 bytes
+HTML transferred:       208929 bytes
+Requests per second:    605.51 [#/sec] (mean)
+Time per request:       660.599 [ms] (mean)
+Time per request:       1.651 [ms] (mean, across all concurrent requests)
+Transfer rate:          102.95 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   1.8      0      13
+Processing:    19  477 1933.6    131   16495
+Waiting:        0  402 1655.3    129   16495
+Total:         21  478 1934.7    131   16502
+
+Percentage of the requests served within a certain time (ms)
+  50%    131
+  66%    133
+  75%    135
+  80%    137
+  90%    158
+  95%   1151
+  98%   7054
+  99%  14453
+ 100%  16502 (longest request)
+<REMOVE>$ ab -c 100 -n 10000 http://127.0.0.1:5000/
+This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Werkzeug/1.0.1
+Server Hostname:        127.0.0.1
+Server Port:            5000
+
+Document Path:          /
+Document Length:        21 bytes
+
+Concurrency Level:      100
+Time taken for tests:   10.553 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      1750000 bytes
+HTML transferred:       210000 bytes
+Requests per second:    947.62 [#/sec] (mean)
+Time per request:       105.528 [ms] (mean)
+Time per request:       1.055 [ms] (mean, across all concurrent requests)
+Transfer rate:          161.95 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       6
+Processing:     9  105  12.2    103     198
+Waiting:        1  103  12.1    101     194
+Total:         10  105  12.1    103     198
+
+Percentage of the requests served within a certain time (ms)
+  50%    103
+  66%    104
+  75%    106
+  80%    106
+  90%    109
+  95%    117
+  98%    145
+  99%    169
+ 100%    198 (longest request)
+ 
+ 
+ vorlon@<REMOVE>:~<REMOVE>$ docker ps -a
+CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS        PORTS                                                      NAMES
+74a376584f5b   grafana/grafana:latest   "/run.sh"                20 hours ago   Up 20 hours   0.0.0.0:3000->3000/tcp                                     l1_grafana_1
+3fada77138fc   prom/prometheus:latest   "/bin/prometheus --c…"   20 hours ago   Up 20 hours   0.0.0.0:9090->9090/tcp                                     l1_prometheus_1
+71a798363c8f   l1_flask                 "python ./app.py"        20 hours ago   Up 20 hours   0.0.0.0:5000->5000/tcp                                     l1_flask_1
+
+
+

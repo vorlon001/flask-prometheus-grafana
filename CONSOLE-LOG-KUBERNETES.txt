@@ -1,0 +1,652 @@
+root@<REMOVE># ./kget.sh
+NAME         STATUS   ROLES                  AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+node/node1   Ready    control-plane,master   22d   v1.20.2   <REMOVE PRIVATE NET KUBE>180    <none>        Ubuntu 20.04.2 LTS   5.4.0-65-generic   containerd://1.4.3
+node/node2   Ready    control-plane,master   22d   v1.20.2   <REMOVE PRIVATE NET KUBE>181    <none>        Ubuntu 20.04.1 LTS   5.4.0-65-generic   containerd://1.4.3
+node/node3   Ready    control-plane,master   22d   v1.20.2   <REMOVE PRIVATE NET KUBE>182    <none>        Ubuntu 20.04.1 LTS   5.4.0-65-generic   containerd://1.4.3
+node/node4   Ready    <none>                 22d   v1.20.2   <REMOVE PRIVATE NET KUBE>183    <none>        Ubuntu 20.04.1 LTS   5.4.0-65-generic   containerd://1.4.3
+node/node5   Ready    <none>                 22d   v1.20.2   <REMOVE PRIVATE NET KUBE>184    <none>        Ubuntu 20.04.1 LTS   5.4.0-65-generic   containerd://1.4.3
+node/node6   Ready    <none>                 22d   v1.20.2   <REMOVE PRIVATE NET KUBE>185    <none>        Ubuntu 20.04.1 LTS   5.4.0-65-generic   containerd://1.4.3
+
+NAME                                         READY   STATUS    RESTARTS   AGE   IP              NODE    NOMINATED NODE   READINESS GATES
+pod/flask-python-bf588f5dc-fxszr             1/1     Running   0          11h   10.233.108.48   node6   <none>           <none>
+pod/grafana-deployment-696684b5b5-b7pkc      1/1     Running   0          9h    10.233.70.51    node5   <none>           <none>
+pod/prometheus-deployment-84d8d9986b-v68cm   1/1     Running   0          9h    10.233.90.35    node1   <none>           <none>
+
+NAME                           TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+service/flask-python-service   LoadBalancer   10.233.24.198   10.5.0.26     6000:32739/TCP   11h   app=flask-python
+service/grafana-service        LoadBalancer   10.233.50.4     10.5.0.28     3000:30371/TCP   9h    app=grafana-deployment,component=grafana
+service/prometheus-service     LoadBalancer   10.233.34.175   10.5.0.27     9090:32636/TCP   9h    app=prometheus-deployment
+
+NAME                                    READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS     IMAGES                                    SELECTOR
+deployment.apps/flask-python            1/1     1            1           11h   flask-python   <REMOVE its HARBOR 2.1.3>:8443<REMOVE REPO>flask.kube:<REMOVE>   app=flask-python
+deployment.apps/grafana-deployment      1/1     1            1           9h    grafana        grafana/grafana                           app=grafana-deployment,component=grafana
+deployment.apps/prometheus-deployment   1/1     1            1           9h    prometheus     prom/prometheus:latest                    app=prometheus-deployment,component=prometheus
+root@<REMOVE># ./kdescr.sh pod/flask-python-bf588f5dc-fxszr
+Name:         flask-python-bf588f5dc-fxszr
+Namespace:    web
+Priority:     0
+Node:         node6/<REMOVE PRIVATE NET KUBE>185
+Start Time:   Sat, 13 Feb 2021 23:21:29 +0500
+Labels:       app=flask-python
+              pod-template-hash=bf588f5dc
+Annotations:  <none>
+Status:       Running
+IP:           10.233.108.48
+IPs:
+  IP:           10.233.108.48
+Controlled By:  ReplicaSet/flask-python-bf588f5dc
+Containers:
+  flask-python:
+    Container ID:   containerd://9f8fb96f2c1c9f9fda8c83c59ab7f0b091964a9f0ba91e72207de2e0d14b9f39
+    Image:          <REMOVE its HARBOR 2.1.3>:8443<REMOVE REPO>flask.kube:<REMOVE>
+    Image ID:       <REMOVE its HARBOR 2.1.3>:8443<REMOVE REPO>flask.kube@sha256:98331f52b168bde2852ce76a8e3fa07c2ed58d00630d6bc09c3d9bf8565ca27f
+    Port:           5000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 13 Feb 2021 23:21:30 +0500
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-ptlpk (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  default-token-ptlpk:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-ptlpk
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>
+root@<REMOVE># ./kdescr.sh pod/grafana-deployment-696684b5b5-b7pkc
+Name:         grafana-deployment-696684b5b5-b7pkc
+Namespace:    web
+Priority:     0
+Node:         node5/<REMOVE PRIVATE NET KUBE>184
+Start Time:   Sun, 14 Feb 2021 01:03:44 +0500
+Labels:       app=grafana-deployment
+              component=grafana
+              pod-template-hash=696684b5b5
+Annotations:  <none>
+Status:       Running
+IP:           10.233.70.51
+IPs:
+  IP:           10.233.70.51
+Controlled By:  ReplicaSet/grafana-deployment-696684b5b5
+Containers:
+  grafana:
+    Container ID:   containerd://2eb66b3df136498bfc11c040f8f0990ec2c1e9b77b272a81197402827b4c8ecc
+    Image:          grafana/grafana
+    Image ID:       docker.io/grafana/grafana@sha256:73ed24788917b1ff33a76ac64a177825173e5ce0a7f973fd0355e07426381518
+    Port:           3000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 14 Feb 2021 01:03:57 +0500
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /etc/grafana/ from grafana-config-volume (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-ptlpk (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  grafana-config-volume:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      grafana-config
+    Optional:  false
+  default-token-ptlpk:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-ptlpk
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>
+root@<REMOVE># ./kdescr.sh pod/prometheus-deployment-84d8d9986b-v68cm
+Name:         prometheus-deployment-84d8d9986b-v68cm
+Namespace:    web
+Priority:     0
+Node:         node1/<REMOVE PRIVATE NET KUBE>180
+Start Time:   Sun, 14 Feb 2021 00:31:19 +0500
+Labels:       app=prometheus-deployment
+              component=prometheus
+              pod-template-hash=84d8d9986b
+Annotations:  <none>
+Status:       Running
+IP:           10.233.90.35
+IPs:
+  IP:           10.233.90.35
+Controlled By:  ReplicaSet/prometheus-deployment-84d8d9986b
+Containers:
+  prometheus:
+    Container ID:   containerd://ecebc35aacd5ebec0c9fac25cf035a66dce3828c31635434aed730b7f3012c3b
+    Image:          prom/prometheus:latest
+    Image ID:       docker.io/prom/prometheus@sha256:ea420f6cd98e4e43e264a7a2e6e27e8328f47aa32d937e0c6e8e3b30fdefe6eb
+    Port:           9090/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 14 Feb 2021 00:31:22 +0500
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /etc/prometheus/prometheus.yml from prometheus-config-volume (rw,path="prometheus.yml")
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-ptlpk (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  prometheus-config-volume:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      prometheus-config
+    Optional:  false
+  default-token-ptlpk:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-ptlpk
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>
+root@<REMOVE># ./kdescr.sh service/grafana-service
+Name:                     grafana-service
+Namespace:                web
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=grafana-deployment,component=grafana
+Type:                     LoadBalancer
+IP Families:              <none>
+IP:                       10.233.50.4
+IPs:                      10.233.50.4
+LoadBalancer Ingress:     10.5.0.28
+Port:                     grafana  3000/TCP
+TargetPort:               3000/TCP
+NodePort:                 grafana  30371/TCP
+Endpoints:                10.233.70.51:3000
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+root@<REMOVE># ./kdescr.sh service/prometheus-service
+Name:                     prometheus-service
+Namespace:                web
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=prometheus-deployment
+Type:                     LoadBalancer
+IP Families:              <none>
+IP:                       10.233.34.175
+IPs:                      10.233.34.175
+LoadBalancer Ingress:     10.5.0.27
+Port:                     <unset>  9090/TCP
+TargetPort:               9090/TCP
+NodePort:                 <unset>  32636/TCP
+Endpoints:                10.233.90.35:9090
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+root@<REMOVE># ./kdescr.sh service/flask-python-service
+Name:                     flask-python-service
+Namespace:                web
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=flask-python
+Type:                     LoadBalancer
+IP Families:              <none>
+IP:                       10.233.24.198
+IPs:                      10.233.24.198
+LoadBalancer Ingress:     10.5.0.26
+Port:                     <unset>  6000/TCP
+TargetPort:               5000/TCP
+NodePort:                 <unset>  32739/TCP
+Endpoints:                10.233.108.48:5000
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+root@<REMOVE># ./kdescr.sh deployment.apps/flask-python
+Name:                   flask-python
+Namespace:              web
+CreationTimestamp:      Sat, 13 Feb 2021 23:19:01 +0500
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 2
+Selector:               app=flask-python
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=flask-python
+  Containers:
+   flask-python:
+    Image:        <REMOVE its HARBOR 2.1.3>:8443<REMOVE REPO>flask.kube:<REMOVE>
+    Port:         5000/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   flask-python-bf588f5dc (1/1 replicas created)
+Events:          <none>
+root@<REMOVE># ./kdescr.sh deployment.apps/grafana-deployment
+Name:                   grafana-deployment
+Namespace:              web
+CreationTimestamp:      Sun, 14 Feb 2021 01:03:44 +0500
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=grafana-deployment,component=grafana
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=grafana-deployment
+           component=grafana
+  Containers:
+   grafana:
+    Image:        grafana/grafana
+    Port:         3000/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:
+      /etc/grafana/ from grafana-config-volume (rw)
+  Volumes:
+   grafana-config-volume:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      grafana-config
+    Optional:  false
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   grafana-deployment-696684b5b5 (1/1 replicas created)
+Events:          <none>
+root@<REMOVE># ./kdescr.sh deployment.apps/prometheus-deployment
+Name:                   prometheus-deployment
+Namespace:              web
+CreationTimestamp:      Sun, 14 Feb 2021 00:31:19 +0500
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=prometheus-deployment,component=prometheus
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=prometheus-deployment
+           component=prometheus
+  Containers:
+   prometheus:
+    Image:        prom/prometheus:latest
+    Port:         9090/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:
+      /etc/prometheus/prometheus.yml from prometheus-config-volume (rw,path="prometheus.yml")
+  Volumes:
+   prometheus-config-volume:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      prometheus-config
+    Optional:  false
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   prometheus-deployment-84d8d9986b (1/1 replicas created)
+Events:          <none>
+root@<REMOVE>#
+
+
+root@<REMOVE># kubectl get configmaps --namespace web prometheus-config -o yaml
+apiVersion: v1
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval:     3s
+
+      external_labels:
+          monitor: 'watcher-app'
+
+    rule_files:
+
+    scrape_configs:
+      - job_name: 'prometheus'
+        static_configs:
+        - targets: ['localhost:9090']
+
+      - job_name: 'flask'
+        scrape_interval: 5s
+        static_configs:
+        - targets: ['flask-python-service.web.svc.cluster.local:6000']
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"prometheus.yml":"global:\n  scrape_interval:     3s\n\n  external_labels:\n      monitor: 'watcher-app'\n\nrule_files:\n\nscrape_configs:\n  - job_name: 'prometheus'\n    static_configs:\n    - targets: ['localhost:9090']\n\n  - job_name: 'flask'\n    scrape_interval: 5s\n    static_configs:\n    - targets: ['flask-python-service.web.svc.cluster.local:6000']\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app":"webs"},"name":"prometheus-config","namespace":"web"}}
+  creationTimestamp: "2021-02-13T19:31:19Z"
+  labels:
+    app: webs
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:prometheus.yml: {}
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:labels:
+          .: {}
+          f:app: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: "2021-02-13T19:31:19Z"
+  name: prometheus-config
+  namespace: web
+  resourceVersion: "5025480"
+  uid: 43f71392-d393-4742-b0bb-54148e079577
+root@<REMOVE># kubectl get configmaps --namespace web grafana-config -o yaml
+apiVersion: v1
+data:
+  dashboard.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 1,
+      "links": [],
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "fill": 1,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 11,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "hiddenSeries": false,
+          "id": 2,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "7.4.1",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "rate(hello_world_counter[30s])",
+              "interval": "",
+              "legendFormat": "{{ path }}",
+              "queryType": "randomWalk",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "FLASK WEB RPS",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "$$hashKey": "object:168",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "$$hashKey": "object:169",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
+      "refresh": false,
+      "schemaVersion": 27,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "2021-02-13T14:55:13.992Z",
+        "to": "2021-02-13T16:08:15.456Z"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "FLASK TEST Copy",
+      "uid": "bMUbBAEGk",
+      "version": 1
+    }
+  dashboards.yml: |
+    apiVersion: 1
+
+    providers:
+    apiVersion: 1
+    providers:
+        - name: default
+          orgId: 1
+          folder: ''
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /etc/grafana/dashboard.json
+  datasource.yml: |+
+    apiVersion: 1
+
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        editable: true
+        is_default: true
+        access: proxy
+        url: http://prometheus-service.web.svc.cluster.local:9090
+
+  grafana.ini: |
+    [security]
+    admin_user = admin
+    admin_password = admin
+
+    [users]
+    viewers_can_edit = true
+
+    [auth]
+    [auth.anonymous]
+    enabled = true
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"dashboard.json":"{\n  \"annotations\": {\n    \"list\": [\n      {\n        \"builtIn\": 1,\n        \"datasource\": \"-- Grafana --\",\n        \"enable\": true,\n        \"hide\": true,\n        \"iconColor\": \"rgba(0, 211, 255, 1)\",\n        \"name\": \"Annotations \u0026 Alerts\",\n        \"type\": \"dashboard\"\n      }\n    ]\n  },\n  \"editable\": true,\n  \"gnetId\": null,\n  \"graphTooltip\": 0,\n  \"id\": 1,\n  \"links\": [],\n  \"panels\": [\n    {\n      \"aliasColors\": {},\n      \"bars\": false,\n      \"dashLength\": 10,\n      \"dashes\": false,\n      \"datasource\": \"Prometheus\",\n      \"description\": \"\",\n      \"fieldConfig\": {\n        \"defaults\": {\n          \"custom\": {}\n        },\n        \"overrides\": []\n      },\n      \"fill\": 1,\n      \"fillGradient\": 0,\n      \"gridPos\": {\n        \"h\": 11,\n        \"w\": 24,\n        \"x\": 0,\n        \"y\": 0\n      },\n      \"hiddenSeries\": false,\n      \"id\": 2,\n      \"legend\": {\n        \"avg\": false,\n        \"current\": false,\n        \"max\": false,\n        \"min\": false,\n        \"show\": true,\n        \"total\": false,\n        \"values\": false\n      },\n      \"lines\": true,\n      \"linewidth\": 1,\n      \"nullPointMode\": \"null\",\n      \"options\": {\n        \"alertThreshold\": true\n      },\n      \"percentage\": false,\n      \"pluginVersion\": \"7.4.1\",\n      \"pointradius\": 2,\n      \"points\": false,\n      \"renderer\": \"flot\",\n      \"seriesOverrides\": [],\n      \"spaceLength\": 10,\n      \"stack\": false,\n      \"steppedLine\": false,\n      \"targets\": [\n        {\n          \"expr\": \"rate(hello_world_counter[30s])\",\n          \"interval\": \"\",\n          \"legendFormat\": \"{{ path }}\",\n          \"queryType\": \"randomWalk\",\n          \"refId\": \"A\"\n        }\n      ],\n      \"thresholds\": [],\n      \"timeFrom\": null,\n      \"timeRegions\": [],\n      \"timeShift\": null,\n      \"title\": \"FLASK WEB RPS\",\n      \"tooltip\": {\n        \"shared\": true,\n        \"sort\": 0,\n        \"value_type\": \"individual\"\n      },\n      \"type\": \"graph\",\n      \"xaxis\": {\n        \"buckets\": null,\n        \"mode\": \"time\",\n        \"name\": null,\n        \"show\": true,\n        \"values\": []\n      },\n      \"yaxes\": [\n        {\n          \"$$hashKey\": \"object:168\",\n          \"format\": \"short\",\n          \"label\": null,\n          \"logBase\": 1,\n          \"max\": null,\n          \"min\": null,\n          \"show\": true\n        },\n        {\n          \"$$hashKey\": \"object:169\",\n          \"format\": \"short\",\n          \"label\": null,\n          \"logBase\": 1,\n          \"max\": null,\n          \"min\": null,\n          \"show\": true\n        }\n      ],\n      \"yaxis\": {\n        \"align\": false,\n        \"alignLevel\": null\n      }\n    }\n  ],\n  \"refresh\": false,\n  \"schemaVersion\": 27,\n  \"style\": \"dark\",\n  \"tags\": [],\n  \"templating\": {\n    \"list\": []\n  },\n  \"time\": {\n    \"from\": \"2021-02-13T14:55:13.992Z\",\n    \"to\": \"2021-02-13T16:08:15.456Z\"\n  },\n  \"timepicker\": {},\n  \"timezone\": \"\",\n  \"title\": \"FLASK TEST Copy\",\n  \"uid\": \"bMUbBAEGk\",\n  \"version\": 1\n}\n","dashboards.yml":"apiVersion: 1\n\nproviders:\napiVersion: 1\nproviders:\n    - name: default\n      orgId: 1\n      folder: ''\n      type: file\n      disableDeletion: true\n      editable: true\n      options:\n        path: /etc/grafana/dashboard.json\n","datasource.yml":"apiVersion: 1\n\ndatasources:\n  - name: Prometheus\n    type: prometheus\n    editable: true\n    is_default: true\n    access: proxy\n    url: http://prometheus-service.web.svc.cluster.local:9090\n\n","grafana.ini":"[security]\nadmin_user = admin\nadmin_password = admin\n\n[users]\nviewers_can_edit = true\n\n[auth]\n[auth.anonymous]\nenabled = true\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app":"flink"},"name":"grafana-config","namespace":"web"}}
+  creationTimestamp: "2021-02-13T20:03:44Z"
+  labels:
+    app: flink
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:dashboard.json: {}
+        f:dashboards.yml: {}
+        f:datasource.yml: {}
+        f:grafana.ini: {}
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:labels:
+          .: {}
+          f:app: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: "2021-02-13T20:03:44Z"
+  name: grafana-config
+  namespace: web
+  resourceVersion: "5030609"
+  uid: 0d3e2988-1581-41df-9fd6-03a4ae154630
+root@<REMOVE>#
+
+
+vorlon@<REMOVE>:~<REMOVE>$ wrk -t50 -c50 -d600s http://10.5.0.26:6000/
+Running 10m test @ http://10.5.0.26:6000/
+  50 threads and 50 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    44.95ms   10.63ms 104.20ms   75.14%
+    Req/Sec    21.52      6.96    70.00     72.67%
+  548190 requests in 10.00m, 91.49MB read
+  Socket errors: connect 0, read 0, write 141, timeout 0
+Requests/sec:    913.50
+Transfer/sec:    156.12KB
+vorlon@<REMOVE>:~<REMOVE>$
+
+
+vorlon@<REMOVE>:~<REMOVE>$ ab -c 100 -n 10000 http://10.5.0.26:6000/
+This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 10.5.0.26 (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Werkzeug/1.0.1
+Server Hostname:        10.5.0.26
+Server Port:            6000
+
+Document Path:          /
+Document Length:        21 bytes
+
+Concurrency Level:      100
+Time taken for tests:   10.578 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      1750000 bytes
+HTML transferred:       210000 bytes
+Requests per second:    945.36 [#/sec] (mean)
+Time per request:       105.779 [ms] (mean)
+Time per request:       1.058 [ms] (mean, across all concurrent requests)
+Transfer rate:          161.56 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       6
+Processing:     4  105   9.7    104     147
+Waiting:        2  104   9.7    103     147
+Total:          5  105   9.7    105     148
+
+Percentage of the requests served within a certain time (ms)
+  50%    105
+  66%    107
+  75%    109
+  80%    110
+  90%    114
+  95%    120
+  98%    128
+  99%    135
+ 100%    148 (longest request)
