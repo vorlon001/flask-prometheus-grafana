@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  namespace: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana-deployment
+      component: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana-deployment
+        component: grafana
+    spec:
+      volumes:
+      - name: grafana-config-volume
+        configMap:
+          name: grafana-config
+          items:
+          - key: grafana.ini
+            path: grafana.ini
+          - key: datasource.yml
+            path: provisioning/datasources/datasource.yml
+          - key: dashboards.yml
+            path: provisioning/dashboards/dashboards.yml
+          - key: dashboard.json
+            path: dashboard.json
+      containers:
+      - name: grafana
+        image: grafana/grafana
+        imagePullPolicy: IfNotPresent # Always
+        ports:
+        - containerPort: 3000
+          name: http
+        volumeMounts:
+          - name: grafana-config-volume
+            mountPath: /etc/grafana/
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        fsGroup: 472
